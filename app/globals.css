@@ -1,0 +1,391 @@
+@import "tailwindcss";
+
+body {
+  background:
+    radial-gradient(at 0% 0%, #0f172a 0, transparent 50%),
+    radial-gradient(at 50% 0%, #1e1b4b 0, transparent 50%),
+    radial-gradient(at 100% 0%, #312e81 0, transparent 50%),
+    #020617 !important;
+  background-attachment: fixed !important;
+  color: white !important;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* PetPulse PRO — subtle film grain (inline SVG only, no external assets) */
+.pp-film-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.pp-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.pp-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.pp-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+.pp-premium-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.pp-rgb-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, #22d3ee, #a78bfa, #fb7185, #34d399, #22d3ee);
+  background-size: 280% 280%;
+  animation: pp-rgb-flow 8s ease infinite;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pp-rgb-border > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pp-card-active {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 60px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 24px 80px -30px rgba(0, 0, 0, 0.85);
+  transform: translateY(-1px);
+}
+
+.pp-pet-orb {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 22px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.pp-pet-orb::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.5) 60deg,
+    transparent 110deg,
+    transparent 360deg
+  );
+  animation: pp-orb-spin 4.8s linear infinite;
+  opacity: 0.45;
+}
+
+.pp-pet-orb::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.25), transparent 55%);
+  pointer-events: none;
+}
+
+.pp-pet-orb-emoji {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  animation: pp-pet-float 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+}
+
+.pp-neon-input {
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(2, 6, 23, 0.72)),
+    radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.18), transparent 40%);
+  box-shadow:
+    inset 0 0 0 1px rgba(168, 85, 247, 0.2),
+    0 0 0 1px rgba(56, 189, 248, 0.22),
+    0 0 26px rgba(56, 189, 248, 0.25),
+    0 0 46px rgba(168, 85, 247, 0.2);
+}
+
+.pp-neon-input:focus {
+  border-color: rgba(34, 211, 238, 0.8);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 114, 182, 0.25),
+    0 0 0 1px rgba(34, 211, 238, 0.55),
+    0 0 35px rgba(34, 211, 238, 0.42),
+    0 0 70px rgba(168, 85, 247, 0.32);
+}
+
+@keyframes pp-rgb-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pp-orb-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pp-pet-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Premium Nature-Health theme */
+@keyframes pp-nature-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(18px, -12px) rotate(3deg);
+  }
+  66% {
+    transform: translate(-12px, 8px) rotate(-2deg);
+  }
+}
+
+@keyframes pp-nature-drift-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-24px, 16px) scale(1.03);
+  }
+}
+
+.pp-nature-float {
+  animation: pp-nature-drift 48s ease-in-out infinite;
+}
+
+.pp-nature-float-2 {
+  animation: pp-nature-drift 58s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+.pp-nature-float-3 {
+  animation: pp-nature-drift-slow 64s ease-in-out infinite;
+  animation-delay: -14s;
+}
+
+@keyframes pp-nature-drift-reverse {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(14px, 10px) rotate(-4deg);
+  }
+}
+
+.pp-nature-float-4 {
+  animation: pp-nature-drift-reverse 72s ease-in-out infinite;
+  animation-delay: -20s;
+}
+
+.pp-nature-float-5 {
+  animation: pp-nature-drift-slow 80s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+.pp-nature-float-6 {
+  animation: pp-nature-drift 88s ease-in-out infinite;
+  animation-delay: -30s;
+}
+
+/* Next-gen glass cards */
+.pp-nature-glass {
+  background-color: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+@keyframes pp-nature-voice-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(124, 169, 130, 0.85), 0 8px 24px rgba(107, 94, 81, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(124, 169, 130, 0.95), 0 0 0 8px rgba(124, 169, 130, 0.12), 0 12px 28px rgba(107, 94, 81, 0.15);
+  }
+}
+
+.pp-nature-voice-bubble {
+  animation: pp-nature-voice-pulse 3.2s ease-in-out infinite;
+}
+
+.pp-nature-input {
+  border: 1px solid rgba(124, 169, 130, 0.55);
+  background: rgba(255, 255, 255, 0.92);
+  color: #292524;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 12px rgba(124, 169, 130, 0.12);
+}
+
+.pp-nature-input:focus {
+  border-color: rgba(124, 169, 130, 0.95);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 169, 130, 0.2), 0 4px 16px rgba(124, 169, 130, 0.15);
+}
+
+.pp-scrollbar-stone {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 169, 130, 0.35) transparent;
+}
+
+.pp-scrollbar-stone::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.pp-scrollbar-stone::-webkit-scrollbar-thumb {
+  background: rgba(124, 169, 130, 0.35);
+  border-radius: 999px;
+}
+
+/* Page shells stay transparent so `body` background photo stays visible */
+.pp-app-shell {
+  background-color: transparent;
+  background-image: none;
+}
+
+/* Firefly dots — slow pulse / twinkle (matches night-scene fireflies) */
+@keyframes pp-firefly-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.75);
+    box-shadow: 0 0 3px 1px rgba(255, 248, 180, 0.25);
+  }
+  40% {
+    opacity: 0.95;
+    transform: scale(1.2);
+    box-shadow:
+      0 0 8px 2px rgba(255, 237, 120, 0.75),
+      0 0 18px 5px rgba(255, 250, 200, 0.35);
+  }
+  55% {
+    opacity: 0.35;
+    transform: scale(0.9);
+    box-shadow: 0 0 4px 1px rgba(255, 248, 180, 0.3);
+  }
+}
+
+.pp-firefly-dot {
+  animation: pp-firefly-pulse 5.8s ease-in-out infinite;
+}
+
+/* Midnight mesh UI — default body text feel */
+.pp-jungle {
+  color: rgb(226 232 240 / 0.9);
+}
+
+.pp-jungle .text-stone-900,
+.pp-jungle .text-stone-800 {
+  color: #ecfdf5 !important;
+}
+
+.pp-jungle .text-stone-700,
+.pp-jungle .text-stone-600 {
+  color: #a7f3d0 !important;
+}
+
+.pp-jungle .text-stone-500 {
+  color: #6ee7b7 !important;
+}
+
+.pp-jungle .text-stone-400 {
+  color: #34d399 !important;
+}
+
+.pp-jungle .border-stone-200\/90,
+.pp-jungle .border-stone-200\/80,
+.pp-jungle .border-stone-200\/70,
+.pp-jungle .border-stone-200\/60 {
+  border-color: rgba(52, 211, 153, 0.22) !important;
+}
+
+.pp-jungle .bg-stone-50,
+.pp-jungle .bg-stone-100 {
+  background-color: rgba(6, 28, 16, 0.55) !important;
+}
+
+.pp-jungle .pp-nature-input {
+  background: rgb(255 255 255 / 0.06) !important;
+  color: #f1f5f9 !important;
+  border-color: rgb(255 255 255 / 0.12) !important;
+}
+
+.pp-jungle .pp-nature-input::placeholder {
+  color: rgb(148 163 184 / 0.75) !important;
+}
+
+.pp-jungle-search-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.pp-jungle-search-shine::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.07) 48%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.07) 52%,
+    transparent 60%
+  );
+  animation: pp-jungle-shine 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pp-jungle-shine {
+  0% {
+    transform: translateX(-18%) rotate(12deg);
+  }
+  100% {
+    transform: translateX(28%) rotate(12deg);
+  }
+}
+
+.pp-pet-orb-glow {
+  transition: box-shadow 0.35s ease, transform 0.2s ease;
+}
